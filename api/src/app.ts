@@ -10,4 +10,5 @@ app.get('/protected', verifyToken, (req, res) => {
   res.json({ message: `Hello ${req.user?.email}`, userId: req.user?.id });
 });
 
+
 export default app;

@@ -1,5 +1,5 @@
 import type { AuthService } from "../domain/AuthService";
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const users = [
     {id: '1', email: 'victorvictord@gmail.com', passwordHash: bcrypt.hashSync('secret',8)}

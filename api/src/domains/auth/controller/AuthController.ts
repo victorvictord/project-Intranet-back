@@ -4,7 +4,7 @@ import { AuthRepo } from '../infrastructure/AuthRepo';
 
 const loginUseCase = new LoginUser(new AuthRepo());
 
-export async function login(req: Request, res: Response){
+export async function login(req: Request, res: Response): Promise<void>{
     const {email, password} = req.body;
     try{
         const {token, user} = await loginUseCase.execute(email, password);
@@ -12,4 +12,5 @@ export async function login(req: Request, res: Response){
     }catch {
         res.status(401).json({error: 'Invalid credencials'});
     }
-}
+
+};
