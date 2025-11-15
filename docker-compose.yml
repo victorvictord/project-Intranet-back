@@ -1,0 +1,19 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    command: npm run dev
+    volumes:
+      - ./api:/app
+    working_dir: /app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - rabbitmq
