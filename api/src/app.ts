@@ -28,7 +28,7 @@ app.get('/protected', verifyToken, (req, res) => {
   res.json({ message: `Hello ${req.user?.email}`, userId: req.user?.id });
 });
 
-httpServer.listen(4000, () => {
+app.listen(4000, () => {
   console.log("Backend DDD y Rabbit escuchando en 4000");
 });
 
