@@ -5,15 +5,40 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  backend:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    command: npm run dev
-    volumes:
-      - ./api:/app
-    working_dir: /app
+  bff:
+    build: ./bff
     ports:
       - "4000:4000"
+    depends_on:
+      - rabbitmq
+      - auth-service
+      - users-service
+      - messages-service
+
+  auth-service:
+    build: ./microservices/authService
+    ports:
+      - "4001:4001"
+    depends_on:
+      - rabbitmq
+
+  users-service:
+    build: ./microservices/userService
+    ports:
+      - "4002:4002"
+    depends_on:
+      - rabbitmq
+
+  messages-service:
+    build: ./microservices/messageService
+    ports:
+      - "4003:4003"
+    depends_on:
+      - rabbitmq
+
+  notifications-service:
+    build: ./microservices/notificationService
+    ports:
+      - "4004:4004"
     depends_on:
       - rabbitmq
