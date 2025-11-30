@@ -1,10 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
+import { EventPublisher } from "../../infrastructure/eventPublisher";
 import { CreateMessageUseCase } from "../../application/CreateMessageUserCase";
 import { InMemoryMessageRepository } from "../../infrastructure/InMemoryMessageRepository";
 import { RabbitEventBus } from "../../infrastructure/RabbitEventBus";
 
 export default function createServer(channel:any){
+
+  const publisher = new EventPublisher(channel);
+  publisher.init();
   const repo = new InMemoryMessageRepository();
   const eventBus = new RabbitEventBus(channel);
   const useCase = new CreateMessageUseCase(repo, eventBus);
