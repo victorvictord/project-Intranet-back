@@ -1,6 +1,6 @@
 services:
   mongo:
-    image: mongo:6
+    image: mongo:8
     container_name: mongo
     restart: always
     ports:
@@ -25,16 +25,18 @@ services:
 
   bff:
     build: ./bff
+    container_name: bff
     ports:
       - "4000:4000"
     depends_on:
       - rabbitmq
-      - messages-service
+      - messagesService
     networks:
       - app-network
 
-  messages-service:
+  messagesService:
     build: ./microservices/messageService
+    container_name: MessageService
     ports:
       - "4003:4003"
     depends_on:
