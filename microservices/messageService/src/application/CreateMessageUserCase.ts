@@ -5,6 +5,7 @@ export class CreateMessageUseCase {
   constructor(private repo: any, private eventBus: any) {}
   async execute({ authorId, content }: {authorId:string, content:string}) {
     const msg = new Message(uuid(), authorId, content);
+    console.log({eventBus: this.eventBus});
     await this.repo.save(msg);
     await this.eventBus.publish("messages.created", msg);
     return msg;
