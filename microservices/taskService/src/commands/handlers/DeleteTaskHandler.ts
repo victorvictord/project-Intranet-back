@@ -1,11 +1,11 @@
 import Task from "../models/Task";
 import { publishEvent } from "../../messaging/publisher";
 
-export const updateTaskStatusHandler = async (id: string, status: string) => {
+export const DeleteTaskStatusHandler = async (id: string) => {
   const task = await Task.findByIdAndUpdate(
     id,
-    { status },
-    { new: true }
+    { status: "deleted" },
+    { new: false }
   );
 
   //  await publishEvent("TASK_UPDATED", task)

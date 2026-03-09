@@ -1,7 +1,6 @@
 import Task from "../models/Task";
-import { RabbitEventBus } from "../../events/EventBus";
-import { publishEvent } from "../../messaging/rabbit";
 import { v4 as uuid } from "uuid";
+import { publishEvent } from "../../messaging/publisher";
 
 export const createTaskHandler = async (data: any) => {
   const taskId = uuid();
@@ -11,8 +10,8 @@ export const createTaskHandler = async (data: any) => {
     ...data,
     status: "BACKLOG",
   });
-
+/*
   publishEvent("TASK_CREATED", task);
-
+*/
   return task;
 };
