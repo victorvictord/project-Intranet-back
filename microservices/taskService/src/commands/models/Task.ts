@@ -1,14 +1,13 @@
 import mongoose, { Schema } from "mongoose";
-import { randomUUID } from "node:crypto";
 
 const TaskWriteSchema = new Schema(
   {
     _id: String,
+    projectId: String,
     title: String,
     description: String,
     status: String,
-    priority: String,
-    date: Date
+    priority: String
   },
   { timestamps: true }
 );
