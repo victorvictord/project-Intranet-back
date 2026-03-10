@@ -1,15 +1,16 @@
 import mongoose, { Schema } from "mongoose";
 
-const TaskWriteSchema = new Schema(
+const ProjectSchema = new Schema(
   {
     _id: String,
-    projectId: String,
     title: String,
     description: String,
     status: String,
-    priority: String
+    priority: String,
+    resposableId: String,
+    accountId: String
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Tasks", TaskWriteSchema);
+export default mongoose.model("Projects", ProjectSchema);

@@ -16,20 +16,22 @@ dotenv.config();
 
 const start = async() => {
 
-await connectRabbit();
+  await connectDB();
 
-await startConsumer();
+  await connectRabbit();
 
-const app = express();
-app.use(cors());
-app.use(express.json());
+  await startConsumer();
 
-app.use("/commands", commandRoutes);
-app.use("/queries", queryRoutes);
+  const app = express();
+  app.use(cors());
+  app.use(express.json());
 
-app.listen(4004, () => {
-  console.log("CQRS Task Service running");
-});
+  app.use("/commands", commandRoutes);
+  app.use("/queries", queryRoutes);
+
+  app.listen(4004, () => {
+    console.log("CQRS Task Service running");
+  });
 
 };
  start();
