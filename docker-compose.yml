@@ -8,12 +8,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: intranetdb
     volumes:
       - "C:/mongo/data:/data/db"
     networks:
       - app-network
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: messaging
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -30,11 +32,11 @@ services:
       - "4000:4000"
     depends_on:
       - rabbitmq
-      - messagesService
+      - messages-service
     networks:
       - app-network
 
-  messagesService:
+  messages-service:
     build: ./microservices/messageService
     container_name: MessageService
     ports:
@@ -43,6 +45,28 @@ services:
       - rabbitmq
     networks:
       - app-network
+  task-service:
+    build: ./microservices/taskService
+    container_name: TaskService
+    ports:
+      - "4004:4004"
+    env_file:
+      - ./microservices/taskService/.env
+    depends_on:
+      - rabbitmq
+    networks:
+      - app-network
+  project-service:
+      build: ./microservices/projectService
+      container_name: ProjectService
+      ports:
+        - "4005:4005"
+      env_file:
+        - ./microservices/projectService/.env
+      depends_on:
+        - rabbitmq
+      networks:
+        - app-network
 networks:
   app-network:
     driver: bridge
