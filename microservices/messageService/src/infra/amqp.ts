@@ -9,7 +9,7 @@ export async function connectAmqpWithRetry(url = "amqp://guest:guest@rabbitmq:56
       return { conn, ch };
     } catch (err) {
       lastErr = err;
-      console.log(`AMQP connect failed, retrying (${i + 1}/${retries})...`);
+      console.log(`AMQP connect failed, retrying (${i + 1}/${retries})...`, err);
       await new Promise(res => setTimeout(res, delay));
     }
   }
